@@ -1,11 +1,3 @@
-//
-//  AddEditViewController.swift
-//  Carangas
-//
-//  Created by Eric Brito.
-//  Copyright © 2017 Eric Brito. All rights reserved.
-//
-
 import UIKit
 
 class AddEditViewController: UIViewController {
