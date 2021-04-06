@@ -5,7 +5,7 @@ class CarsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -18,9 +18,15 @@ class CarsTableViewController: UITableViewController {
         } onError: { (error) in
             print(error)
         }
-
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewSegue" {
+            let vc = segue.destination as! CarViewController
+            vc.car = cars[tableView.indexPathForSelectedRow!.row]
+        }
+    }
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -35,6 +41,12 @@ class CarsTableViewController: UITableViewController {
         cell.detailTextLabel?.text = car.brand
         return cell
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
 }
