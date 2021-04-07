@@ -12,6 +12,7 @@ class AddEditViewController: UIViewController {
 
     // MARK: - Properties
     var car: Car!
+    
     var brands: [Brand] = []
     lazy var pickerView: UIPickerView = {
         let pickerView = UIPickerView()
@@ -39,12 +40,19 @@ class AddEditViewController: UIViewController {
         let btDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         toolbar.items = [btCancel, btSpace, btDone]
         tfBrand.inputAccessoryView = toolbar
-        
         tfBrand.inputView = pickerView
+        
+        loadBrands()
     }
     
     // MARK: - IBActions
     @IBAction func addEdit(_ sender: UIButton) {
+        sender.isEnabled = false
+        sender.backgroundColor = .gray
+        sender.alpha = 0.5
+        loading.startAnimating()
+        
+        
         if car == nil {
             car = Car()
         }
@@ -70,7 +78,7 @@ class AddEditViewController: UIViewController {
     func loadBrands() {
         REST.loadBrands { (brands) in
             if let brands = brands {
-                self.brands = brands
+                self.brands = brands.sorted(by: {$0.name < $1.name})
                 DispatchQueue.main.async {
                     self.pickerView.reloadAllComponents()
                 }

@@ -3,6 +3,12 @@ import UIKit
 class CarsTableViewController: UITableViewController {
     var cars: [Car] = []
     
+    var label: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "main")
+        return label
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         
