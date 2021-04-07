@@ -10,6 +10,7 @@ class CarsTableViewController: UITableViewController {
         return label
     }()
     override func viewDidLoad() {
+        label.text = "Carregando carros"
         super.viewDidLoad()
         
     }
@@ -19,6 +20,7 @@ class CarsTableViewController: UITableViewController {
         REST.loadCars { (cars) in
             self.cars = cars
             DispatchQueue.main.async {
+                self.label.text = "Não existe carros cadastrados"
                 self.tableView.reloadData()
             }
         } onError: { (error) in
@@ -35,7 +37,7 @@ class CarsTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        tableView.backgroundView = cars.count == 0 ? label : nil
         return cars.count
     }
     
